@@ -86,7 +86,7 @@ The system is based on light-to-voltage conversion:
 
 ---
 
-## 👤 Author
+##  Author
 
 Martin – ESILV Engineering Student (Createch)
 Music Producer & Creative Technologist
