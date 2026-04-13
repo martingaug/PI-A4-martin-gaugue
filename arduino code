@@ -1,0 +1,47 @@
+const int PIN_R = D1;
+const int PIN_G = D2;
+const int PIN_B = D3;
+
+const int POT_PIN = A0;
+
+void setRGB(int r, int g, int b) {
+  // anode commune => logique inversée
+  analogWrite(PIN_R, 255 - r);
+  analogWrite(PIN_G, 255 - g);
+  analogWrite(PIN_B, 255 - b);
+}
+
+void setup() {
+  pinMode(PIN_R, OUTPUT);
+  pinMode(PIN_G, OUTPUT);
+  pinMode(PIN_B, OUTPUT);
+  pinMode(POT_PIN, INPUT);
+}
+
+void loop() {
+  int pot = analogRead(POT_PIN);   // souvent entre 0 et 4095 sur ESP32-S3
+
+  int r = 0, g = 0, b = 0;
+
+  if (pot < 1365) {
+    int x = map(pot, 0, 1365, 0, 255);
+    r = 255 - x;
+    g = x;
+    b = 0;
+  }
+  else if (pot < 2730) {
+    int x = map(pot, 1365, 2730, 0, 255);
+    r = 0;
+    g = 255 - x;
+    b = x;
+  }
+  else {
+    int x = map(pot, 2730, 4095, 0, 255);
+    r = x;
+    g = 0;
+    b = 255 - x;
+  }
+
+  setRGB(r, g, b);
+  delay(10);
+}
